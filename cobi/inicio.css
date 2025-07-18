@@ -1,0 +1,174 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f4fdf8;
+  color: #333;
+  padding: 1.5rem;
+}
+
+/* Cabecera */
+header.cabecera-cobi {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+header.cabecera-cobi h1 {
+  color: #2e7d32;
+  font-size: 2rem;
+}
+
+.logo-cobi {
+  height: 50px;
+  width: auto;
+}
+
+/* Título principal */
+.titulo-principal {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #388e3c;
+}
+
+/* Contenedor de tarjetas */
+.secciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Tarjetas de menú */
+.tarjeta {
+  background-color: #ffffff;
+  border: 2px solid #c8e6c9;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+.tarjeta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.tarjeta h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #2e7d32;
+}
+
+.tarjeta p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.tarjeta a {
+  display: inline-block;
+  text-decoration: none;
+  background: #66bb6a;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.tarjeta a:hover {
+  background: #43a047;
+}
+
+/* Ventajas y balanza */
+.ventajas {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  border-radius: 12px;
+}
+
+.ventajas h2 {
+  color: #388e3c;
+  margin-bottom: 1rem;
+}
+
+.ventajas ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.ventajas li {
+  margin-bottom: 0.6rem;
+}
+
+.ventajas .precio-balanza {
+  background: #fffde7;
+  border: 1px solid #fdd835;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.ventajas .precio-balanza strong {
+  font-size: 1.2rem;
+  color: #fbc02d;
+}
+
+/* Responsive ajuste cabecera */
+@media screen and (max-width: 600px) {
+  header.cabecera-cobi {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.promo-balanza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.balanza-texto {
+  flex: 1;
+  min-width: 240px;
+}
+
+.balanza-texto h2 {
+  color: #388e3c;
+  margin-bottom: 0.5rem;
+}
+
+.balanza-texto p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.precio {
+  color: #f57c00;
+  font-size: 1.3rem;
+}
+
+.balanza-imagen img {
+  max-width: 220px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}

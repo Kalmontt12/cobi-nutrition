@@ -1,0 +1,64 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Menú Semanal Personalizado - COBI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="estilos.css" />
+  <style>
+    #resultadoMenu {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-cobi">
+    <img src="logo-cobi.png.png" alt="Logo COBI" class="logo-cobi">
+    <h1>Menú Semanal Personalizado - COBI</h1>
+  </header>
+
+  <form id="formMenu">
+    <p><strong>Selecciona tus gustos alimenticios:</strong></p>
+    <label><input type="checkbox" name="gustos" value="vegetales"> Vegetales</label>
+    <label><input type="checkbox" name="gustos" value="proteinas"> Proteínas</label>
+    <label><input type="checkbox" name="gustos" value="frutas"> Frutas</label>
+    <label><input type="checkbox" name="gustos" value="integrales"> Integrales</label>
+    <label><input type="checkbox" name="gustos" value="lacteos"> Lácteos</label>
+
+    <p><strong>¿Tienes alguna restricción?</strong></p>
+    <label><input type="checkbox" name="restricciones" value="sin_lactosa"> Sin lactosa</label>
+    <label><input type="checkbox" name="restricciones" value="sin_gluten"> Sin gluten</label>
+    <label><input type="checkbox" name="restricciones" value="vegetariano"> Vegetariano</label>
+    <label><input type="checkbox" name="restricciones" value="vegano"> Vegano</label>
+
+    <p><strong>Correo (opcional para enviar menú):</strong></p>
+    <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" style="width: 100%; max-width: 400px; padding: 0.4rem; margin-top: 0.5rem;" />
+
+    <div class="acciones">
+      <button type="submit">Generar menú</button>
+      <button type="button" id="guardarBtn">💾 Guardar</button>
+      <button type="button" id="copiarBtn">📋 Copiar texto</button>
+      <button type="button" id="descargarBtn">🖨️ Imprimir</button>
+      <button type="button" id="enviarBtn">📧 Enviar por correo</button>
+    </div>
+  </form>
+
+  <div class="resultado" id="resultadoMenu"></div>
+
+  <div class="volver">
+    <a href="index.html">← Volver al inicio</a>
+  </div>
+
+  <script src="menu-cobi.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("user_7LNZ17eIMJzHrwA86");
+    })();
+
+    // Mostrar el resultado solo al generar el menú
+    document.getElementById("formMenu").addEventListener("submit", () => {
+      document.getElementById("resultadoMenu").style.display = "block";
+    });
+  </script>
+</body>
+</html>

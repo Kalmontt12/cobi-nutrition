@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora IMC y Metabolismo - COBI</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label, input, select {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+
+    button {
+      padding: 0.6rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    .resultado {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .recomendacion {
+      margin-top: 1rem;
+      background-color: #e8f5e9;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    canvas {
+      max-width: 100%;
+      margin-top: 2rem;
+    }
+
+    .volver {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .volver a {
+      text-decoration: none;
+      color: #4caf50;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora IMC y Metabolismo</h1>
+
+  <form id="formIMC">
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" required>
+
+    <label for="altura">Altura (cm):</label>
+    <input type="number" id="altura" required>
+
+    <label for="edad">Edad (años):</label>
+    <input type="number" id="edad" required>
+
+    <label for="sexo">Sexo:</label>
+    <select id="sexo" required>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+    </select>
+
+    <label for="actividad">Nivel de actividad física:</label>
+    <select id="actividad" required>
+      <option value="1.2">Sedentario</option>
+      <option value="1.375">Actividad ligera</option>
+      <option value="1.55">Actividad moderada</option>
+      <option value="1.725">Actividad intensa</option>
+      <option value="1.9">Muy intensa</option>
+    </select>
+
+    <button type="submit">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+    <div class="recomendacion" id="recomendacion"></div>
+    <canvas id="grafico"></canvas>
+  </form>
+
+  <div class="volver">
+    <a href="index.html">← Volver al inicio</a>
+  </div>
+
+  <script>
+    let grafico;
+
+    document.getElementById("formIMC").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+      const edad = parseInt(document.getElementById("edad").value);
+      const sexo = document.getElementById("sexo").value;
+      const actividad = parseFloat(document.getElementById("actividad").value);
+
+      const alturaM = altura / 100;
+      const imc = peso / (alturaM * alturaM);
+
+      let categoria = "";
+      if (imc < 18.5) categoria = "Bajo peso";
+      else if (imc < 25) categoria = "Peso normal";
+      else if (imc < 30) categoria = "Sobrepeso";
+      else categoria = "Obesidad";
+
+      let tmb = sexo === "masculino"
+        ? 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad)
+        : 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);
+
+      const calorias = tmb * actividad;
+
+      localStorage.setItem("calorias_diarias", calorias.toFixed(0));
+
+      document.getElementById("resultado").innerHTML = `
+        🧮 IMC: <strong>${imc.toFixed(2)}</strong> (${categoria})<br>
+        🔥 TMB: <strong>${tmb.toFixed(0)} cal/día</strong><br>
+        💪 Calorías necesarias: <strong>${calorias.toFixed(0)} cal/día</strong>
+      `;
+
+      let recomendacion = "";
+      if (imc < 18.5) {
+        recomendacion = "📌 Recomendación: Necesitas aumentar tu ingesta calórica con alimentos ricos en nutrientes.";
+      } else if (imc < 25) {
+        recomendacion = "✅ Recomendación: Estás en un peso saludable. Mantén una dieta equilibrada.";
+      } else if (imc < 30) {
+        recomendacion = "⚠️ Recomendación: Considera reducir tu ingesta calórica y hacer más actividad física.";
+      } else {
+        recomendacion = "🚨 Recomendación: Consulta con un nutricionista para una dieta personalizada.";
+      }
+      document.getElementById("recomendacion").innerText = recomendacion;
+
+      // Guardar en localStorage
+      localStorage.setItem("cobi_resultado", JSON.stringify({
+        imc: imc.toFixed(2),
+        categoria,
+        tmb: tmb.toFixed(0),
+        calorias: calorias.toFixed(0)
+      }));
+
+      // Mostrar gráfico
+      const ctx = document.getElementById("grafico").getContext("2d");
+
+      if (grafico) grafico.destroy();
+
+      grafico = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["IMC", "IMC Ideal (22)", "TMB", "Calorías necesarias"],
+          datasets: [{
+            label: "Valor",
+            data: [imc.toFixed(2), 22, tmb.toFixed(0), calorias.toFixed(0)],
+            backgroundColor: [
+              "#4caf50", "#8bc34a", "#2196f3", "#ff9800"
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
