@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculador de Calorías - COBI</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f4;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 0.5rem;
+    }
+
+    ul#sugerencias {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: white;
+      border: 1px solid #ccc;
+      max-height: 120px;
+      overflow-y: auto;
+      position: absolute;
+      z-index: 1;
+      width: calc(100% - 3rem);
+    }
+
+    ul#sugerencias li {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    ul#sugerencias li:hover {
+      background-color: #e0e0e0;
+    }
+
+    button {
+      padding: 0.6rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .resultado {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculador de Calorías Consumidas</h1>
+
+  <form id="formularioCalorias" autocomplete="off">
+    <label for="alimento">Busca un alimento:</label>
+    <input type="text" id="alimento" placeholder="Ej. arroz">
+    <ul id="sugerencias"></ul>
+
+    <label for="cantidad">Cantidad consumida (g/ml):</label>
+    <input type="number" id="cantidad" required placeholder="Ej. 150">
+
+    <button type="submit">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+  </form>
+
+  <script>
+    let datosAlimentos = {};
+
+    // Cargar el JSON
+    fetch('alimentos.json')
+      .then(res => res.json())
+      .then(data => {
+        datosAlimentos = data;
+      });
+
+    const alimentoInput = document.getElementById("alimento");
+    const sugerencias = document.getElementById("sugerencias");
+
+    alimentoInput.addEventListener("input", function () {
+      const texto = this.value.toLowerCase();
+      sugerencias.innerHTML = "";
+      if (texto.length === 0) return;
+
+      Object.keys(datosAlimentos).forEach(nombre => {
+        if (nombre.includes(texto)) {
+          const li = document.createElement("li");
+          li.textContent = nombre;
+          li.onclick = () => {
+            alimentoInput.value = nombre;
+            sugerencias.innerHTML = "";
+          };
+          sugerencias.appendChild(li);
+        }
+      });
+    });
+
+    document.getElementById("formularioCalorias").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nombre = alimentoInput.value.toLowerCase();
+      const cantidad = parseFloat(document.getElementById("cantidad").value);
+
+      if (!datosAlimentos[nombre]) {
+        document.getElementById("resultado").innerText = "Alimento no encontrado.";
+        return;
+      }
+
+      const calorias = (cantidad * datosAlimentos[nombre]) / 100;
+      document.getElementById("resultado").innerText = 
+        `Has consumido aproximadamente ${calorias.toFixed(2)} calorías de ${nombre}.`;
+    });
+  </script>
+  <div class="volver">
+  <a href="index.html">← Volver al inicio</a>
+</div>
+</body>
+</html>

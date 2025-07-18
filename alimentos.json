@@ -1,0 +1,42 @@
+{
+  "vegetales": [
+    { "nombre": "Brócoli al vapor", "calorias": 50, "porcion": "1/2 taza" },
+    { "nombre": "Sopa de verduras", "calorias": 90, "porcion": "1 taza" },
+    { "nombre": "Ensalada de espinacas", "calorias": 80, "porcion": "1 taza" },
+    { "nombre": "Tortilla de acelga", "calorias": 120, "porcion": "1 unidad" },
+    { "nombre": "Crema de zanahoria y calabacín", "calorias": 90, "porcion": "1 taza" },
+    { "nombre": "Salteado de espárragos con ajo", "calorias": 70, "porcion": "1/2 taza" }
+  ],
+  "proteinas": [
+    { "nombre": "Huevo cocido", "calorias": 70, "porcion": "1 unidad" },
+    { "nombre": "Pollo a la plancha", "calorias": 150, "porcion": "100 g" },
+    { "nombre": "Tofu marinado", "calorias": 100, "porcion": "100 g" },
+    { "nombre": "Pescado al vapor", "calorias": 130, "porcion": "100 g" },
+    { "nombre": "Huevos revueltos con espinaca", "calorias": 180, "porcion": "2 huevos" },
+    { "nombre": "Garbanzos estofados", "calorias": 200, "porcion": "1 taza" }
+  ],
+  "frutas": [
+    { "nombre": "Manzana", "calorias": 80, "porcion": "1 unidad" },
+    { "nombre": "Papaya", "calorias": 70, "porcion": "1 taza" },
+    { "nombre": "Plátano", "calorias": 100, "porcion": "1 unidad" },
+    { "nombre": "Fresas", "calorias": 50, "porcion": "1 taza" },
+    { "nombre": "Ensalada de naranja y kiwi", "calorias": 100, "porcion": "1 taza" },
+    { "nombre": "Batido de plátano con avena", "calorias": 130, "porcion": "1 vaso" }
+  ],
+  "integrales": [
+    { "nombre": "Avena cocida", "calorias": 150, "porcion": "1 taza" },
+    { "nombre": "Arroz integral", "calorias": 110, "porcion": "1/2 taza" },
+    { "nombre": "Pan integral", "calorias": 90, "porcion": "1 rebanada" },
+    { "nombre": "Quinua", "calorias": 120, "porcion": "1/2 taza" },
+    { "nombre": "Tostadas integrales con aguacate", "calorias": 190, "porcion": "2 rebanadas" },
+    { "nombre": "Galletas integrales de avena", "calorias": 160, "porcion": "3 unidades" }
+  ],
+  "lacteos": [
+    { "nombre": "Yogur natural", "calorias": 100, "porcion": "1 vaso" },
+    { "nombre": "Leche descremada", "calorias": 90, "porcion": "1 taza" },
+    { "nombre": "Queso fresco", "calorias": 110, "porcion": "50 g" },
+    { "nombre": "Kéfir", "calorias": 80, "porcion": "1 taza" },
+    { "nombre": "Leche con cacao bajo en azúcar", "calorias": 110, "porcion": "1 taza" },
+    { "nombre": "Queso cottage con frutas", "calorias": 140, "porcion": "1/2 taza" }
+  ]
+}
